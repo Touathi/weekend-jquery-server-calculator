@@ -6,84 +6,202 @@ function onReady() {
     $('#subtractBtn').on('click', subtractBtn)
     $('#multiplyBtn').on('click', multiplyBtn)
     $('#divideBtn').on('click', divideBtn)
-    $('#equalBtn').on('click', equalBtn)
-    $('#clearBtn').on('click', clearBtn)
+    $('#equalBtn').on('click', Sendcalculation)
+    $('#clearBtn').on('click', clearAll)
+    getCalculations()
+    
 }
-// Make function to all Btns
+
+let operator = $(this).text()
+let Num1 = $('#leftNum').val()
+let Num2 = $('#rightNum').val()
+
+
+
+// MAKE BTN FUNCTIONS //
+
+// Add btn function
 function addBtn(event) {
+    operator = '+'
     event.preventDefault()
     console.log(`test addBtn function`);
-    $('#addBtn').addClass('grayout')
-    $('#subtractBtn').removeClass('grayout')
-    $('#multiplyBtn').removeClass('grayout')
-    $('#divideBtn').removeClass('grayout')
+    // add class to addBtn and remove class from other Btns
+    $('#addBtn').addClass('select')
+    $('#subtractBtn').removeClass('select')
+    $('#multiplyBtn').removeClass('select')
+    $('#divideBtn').removeClass('select')
+    // Turn Btn disable for addBtn
     $('#addBtn').prop('disabled', true)
     $('#subtractBtn').prop('disabled', false)
     $('#multiplyBtn').prop('disabled', false)
     $('#divideBtn').prop('disabled', false)
-
+    console.log(operator);
 
 }
+
+// Subtraction btn function
 function subtractBtn(event) {
+    operator = '-'
     event.preventDefault()
     console.log(`test subtractBtn`);
-    $('#subtractBtn').addClass('grayout')
-    $('#addBtn').removeClass('grayout')
-    $('#multiplyBtn').removeClass('grayout')
-    $('#divideBtn').removeClass('grayout')
+     // add class to subtractBtn and remove class from other Btns
+    $('#subtractBtn').addClass('select')
+    $('#addBtn').removeClass('select')
+    $('#multiplyBtn').removeClass('select')
+    $('#divideBtn').removeClass('select')
+    // Turn Btn disable for subtractBtn
     $('#addBtn').prop('disabled', false)
     $('#subtractBtn').prop('disabled', true)
     $('#multiplyBtn').prop('disabled', false)
     $('#divideBtn').prop('disabled', false)
-
+    console.log(operator);
     
 }
 
+// Multiply btn function
 function multiplyBtn(event) {
+    operator = '*'
     event.preventDefault()
     console.log(`test multiplyBtn`);
-    $('#multiplyBtn').addClass('grayout')
-    $('#subtractBtn').removeClass('grayout')
-    $('#addBtn').removeClass('grayout')
-    $('#divideBtn').removeClass('grayout')
+     // add class to multiplyBtn and remove class from other Btns
+    $('#multiplyBtn').addClass('select')
+    $('#subtractBtn').removeClass('select')
+    $('#addBtn').removeClass('select')
+    $('#divideBtn').removeClass('select')
+    // Turn Btn disable for multiplyBtn
     $('#multiplyBtn').prop('disabled', true)
     $('#subtractBtn').prop('disabled', false)
     $('#addBtn').prop('disabled', false)
     $('#divideBtn').prop('disabled', false)
+    console.log(operator);
 }
 
+// Division btn function
 function divideBtn(event) {
+    operator = '/'
     event.preventDefault()
     console.log(`test divideBtn`);
-    $('#divideBtn').addClass('grayout')
-    $('#subtractBtn').removeClass('grayout')
-    $('#multiplyBtn').removeClass('grayout')
-    $('#addBtn').removeClass('grayout')
+     // add class to divideBtn and remove class from other Btns
+    $('#divideBtn').addClass('select')
+    $('#subtractBtn').removeClass('select')
+    $('#multiplyBtn').removeClass('select')
+    $('#addBtn').removeClass('select')
+    // Turn Btn disable for divideBtn
     $('#divideBtn').prop('disabled', true)
     $('#subtractBtn').prop('disabled', false)
     $('#multiplyBtn').prop('disabled', false)
     $('#addBtn').prop('disabled', false)
+    console.log(operator);
 }
 
-function equalBtn(event) {
-    event.preventDefault()
-    console.log(`test equalBtn`);
-    
-}
 
-function clearBtn(event) {
+
+// Clear btn function
+function clearAll(event) {
     event.preventDefault()
-    console.log(`test clearBtn`);
-    $('#addBtn').removeClass('grayout')
-    $('#subtractBtn').removeClass('grayout')
-    $('#multiplyBtn').removeClass('grayout')
-    $('#divideBtn').removeClass('grayout')
+    console.log(`Test clear All`);
+
+    // remove class from all Btns
+    $('#addBtn').removeClass('select')
+    $('#subtractBtn').removeClass('select')
+    $('#multiplyBtn').removeClass('select')
+    $('#divideBtn').removeClass('select')
+
+    // turn disable property off
     $('#divideBtn').prop('disabled', false)
     $('#subtractBtn').prop('disabled', false)
     $('#multiplyBtn').prop('disabled', false)
     $('#addBtn').prop('disabled', false)
+
+    // Clear input values
+    $('#leftNum').val('')
+    $('#rightNum').val('')
 }
 
+// ------------------------------EQUAL BTN function --------------
+function Sendcalculation(event) {
+    event.preventDefault()
+    let Num1 = $('#leftNum').val()
+    let Num2 = $('#rightNum').val()
+
+    
+
+    
+    console.log(`test Send calculations to server`);
+
+    // // RUN A $.ajax POST ------------------------
+    $.ajax({
+        method: 'POST',
+        url: '/calculation',
+        data: {
+            Num1: Num1,
+            operator: operator,
+            Num2: Num2,
+        }
+    }).then (function (respond) {
+        // GET inside .then(function) -----------------------
+        console.log(respond);
+        getCalculations();
+    }).catch(function (error) {
+        alert('Errors with sending calculations to server!')
+        console.log('Request Failed : ', error);
+    })
+  
 
 
+//---------------------------  DONT TOUCH BELOW, ALL WORKS GREAT
+    // Clear input values
+    $('#leftNum').val('')
+    $('#rightNum').val('')
+
+    // remove class from all Btns
+    $('#addBtn').removeClass('select')
+    $('#subtractBtn').removeClass('select')
+    $('#multiplyBtn').removeClass('select')
+    $('#divideBtn').removeClass('select')
+
+    // turn disable property off
+    $('#divideBtn').prop('disabled', false)
+    $('#subtractBtn').prop('disabled', false)
+    $('#multiplyBtn').prop('disabled', false)
+    $('#addBtn').prop('disabled', false)
+
+    console.log(`${Num1} ${operator} ${Num2} `);
+}
+// END OF BTN FUNCTIONS -------------- Don't Touch Above , ALL WORKS GREAT
+
+
+
+// .AJAX GET ------------------------ GET HERE
+// Get calculations from server
+function getCalculations() {
+    $.ajax({
+        medthod: 'GET',
+        url: '/calculation'
+    }).then (function (respond) {
+        $('#historyList').empty();
+        console.log(respond);
+        render(respond)
+    })
+}
+
+function render(respond) {
+    // empty list
+    $('#historyList').empty()
+    // append updated list to the history list
+    for (let calculation of respond) {
+        console.log(calculation);
+    
+    $('#outcome').text(calculation.sum)
+
+    $('#historyList').append(`
+       
+
+        <ul>
+            <li> ${calculation.string} </li>
+        </ul>
+    `)
+
+    }
+}
 console.log('Page has finished loading');

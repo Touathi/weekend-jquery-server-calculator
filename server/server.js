@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser')
-const add = require('../modules/add')
+const runCalculation = require('../modules/runCalculation')
 // ---------------- require stuff stay above ----------------//
 const app = express();
 
@@ -11,18 +11,32 @@ const PORT = 5000;
 app.use(bodyParser.urlencoded({extended:true}))
 
 // Get public Files html/css/script.js
-app.use(express.static('server/public'));
+app.use(express.static('public'))
 
+// Calculation History Array
+const calculationHistory = []
 
 // Switch statment
 
 
 //  app.GET  HERE 
-
+app.get('/calculation', function (req, res) {
+    console.log('GET Request for /runCalculation was made');
+    res.send(calculationHistory)
+})
 
 
 // app.POST   HERE
+app.post('/calculation', function  (req, res) {
+  let data = req.body
+console.log( req.body, 'was sent to server');
+  runCalculation(req.body)// data same thing
+  sum = runCalculation(req.body)
+  const string = `${data.Num1} ${data.operator} ${data.Num2} = ${sum}`
+  calculationHistory.push({string,sum})
 
+  res.sendStatus(201)
+})
 
 
 

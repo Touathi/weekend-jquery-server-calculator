@@ -30,7 +30,7 @@ div#historyContainer {
 
 ul#historyList {
     display: inline-block;
-    text-align: center;
+    text-align: left;
 }
 
 #byme {
@@ -44,15 +44,15 @@ ul#historyList {
    padding: 30px;
 }
 
-#addBtn.grayout {
+#addBtn.select {
   background-color: gray;
 }
-#subtractBtn.grayout {
+#subtractBtn.select {
     background-color: gray;
   }
-#multiplyBtn.grayout {
+#multiplyBtn.select {
     background-color: gray;
   }
-#divideBtn.grayout {
+#divideBtn.select {
     background-color: gray;
   }

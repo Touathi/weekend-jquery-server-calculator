@@ -1,7 +1,6 @@
 const express = require('express');
-
 const bodyParser = require('body-parser')
-
+const add = require('../modules/add')
 // ---------------- require stuff stay above ----------------//
 const app = express();
 
@@ -15,6 +14,7 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.static('server/public'));
 
 
+// Switch statment
 
 
 //  app.GET  HERE 

@@ -14,6 +14,10 @@ form {
     padding: 20px
 }
 
+#viewinputs {
+    text-align: center;
+}
+
 div#outcomeContainer {
         text-align: center;
         padding: 20px;
@@ -39,3 +43,16 @@ ul#historyList {
    text-align: center;
    padding: 30px;
 }
+
+#addBtn.grayout {
+  background-color: gray;
+}
+#subtractBtn.grayout {
+    background-color: gray;
+  }
+#multiplyBtn.grayout {
+    background-color: gray;
+  }
+#divideBtn.grayout {
+    background-color: gray;
+  }

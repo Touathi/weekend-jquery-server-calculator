@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Side Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="jquery.js"></script>
+    <script src="client.js"></script>
+</head>
+<body>
+
+    <h1>Server Side Calculator</h1>
+    
+
+    <form id="mathPart">
+        <input type="number" id="leftNum" placeholder="Number 1">
+        <button id="addBtn">+</button>
+        <button id="subtractBtn">-</button>
+        <button id="multiplyBtn">*</button>
+        <button id="divideBtn">/</button>
+        <input type="number" id="rightNum" placeholder="Number 2">
+        <button id="equalBtn">=</button>
+        <button id="clear">C</button>
+    </form>
+    
+    <div id="outcomeContainer">
+        <p>Total</p>
+        <span id="outcome">NaN</span>
+    </div>
+
+    <div id="historyContainer">
+        <ul id="historyList">
+            <li>12 + 4 = 16</li>
+        </ul>
+    </div>
+
+
+<footer id="byme">Created by Touathi</footer>
+
+</body>
+</html>

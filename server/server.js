@@ -5,7 +5,7 @@ const runCalculation = require('../modules/runCalculation')
 const app = express();
 
 // localhost:5000
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 // Use bodyParser "use for post"
 app.use(bodyParser.urlencoded({extended:true}))
@@ -29,9 +29,9 @@ app.get('/calculation', function (req, res) {
 // app.POST   HERE
 app.post('/calculation', function  (req, res) {
   let data = req.body
-console.log( req.body, 'was sent to server');
-  runCalculation(req.body)// data same thing
-  sum = runCalculation(req.body)
+console.log( data, 'was sent to server');
+  runCalculation(data)
+  sum = runCalculation(data)
   const string = `${data.Num1} ${data.operator} ${data.Num2} = ${sum}`
   calculationHistory.push({string,sum})
 

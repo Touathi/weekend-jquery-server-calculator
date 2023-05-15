@@ -9,6 +9,7 @@ function onReady() {
     $('#equalBtn').on('click', Sendcalculation)
     $('#clearBtn').on('click', clearAll)
     getCalculations()
+
     
 }
 
@@ -21,6 +22,7 @@ let Num2 = $('#rightNum').val()
 // MAKE BTN FUNCTIONS //
 
 // Add btn function
+// works great
 function addBtn(event) {
     operator = '+'
     event.preventDefault()
@@ -40,9 +42,10 @@ function addBtn(event) {
 }
 
 // Subtraction btn function
-function subtractBtn(event) {
+// works great
+function subtractBtn() {
     operator = '-'
-    event.preventDefault()
+    event.preventDefault() 
     console.log(`test subtractBtn`);
      // add class to subtractBtn and remove class from other Btns
     $('#subtractBtn').addClass('select')
@@ -59,9 +62,10 @@ function subtractBtn(event) {
 }
 
 // Multiply btn function
-function multiplyBtn(event) {
+// works great
+function multiplyBtn() {
     operator = '*'
-    event.preventDefault()
+    event.preventDefault() 
     console.log(`test multiplyBtn`);
      // add class to multiplyBtn and remove class from other Btns
     $('#multiplyBtn').addClass('select')
@@ -77,9 +81,10 @@ function multiplyBtn(event) {
 }
 
 // Division btn function
+// works great
 function divideBtn(event) {
     operator = '/'
-    event.preventDefault()
+    event.preventDefault() 
     console.log(`test divideBtn`);
      // add class to divideBtn and remove class from other Btns
     $('#divideBtn').addClass('select')
@@ -97,6 +102,7 @@ function divideBtn(event) {
 
 
 // Clear btn function
+// works great
 function clearAll(event) {
     event.preventDefault()
     console.log(`Test clear All`);
@@ -149,7 +155,7 @@ function Sendcalculation(event) {
   
 
 
-//---------------------------  DONT TOUCH BELOW, ALL WORKS GREAT
+
     // Clear input values
     $('#leftNum').val('')
     $('#rightNum').val('')
@@ -179,10 +185,10 @@ function getCalculations() {
         medthod: 'GET',
         url: '/calculation'
     }).then (function (respond) {
-        $('#historyList').empty();
         console.log(respond);
         render(respond)
     })
+   
 }
 
 function render(respond) {
